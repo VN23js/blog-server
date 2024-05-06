@@ -64,3 +64,19 @@ export const getAll = async (req, res) => {
     res.json([{ error: error.message }]);
   }
 };
+
+export const getById = async (req, res) => {
+  try {
+    const post = await Post.findByIdAndUpdate(req.params.id, {
+      $inc: { views: 1 }
+    });
+
+    if (!post) {
+      res.status(404).json({ message: "Post not found" });
+    } else {
+      res.json(post);
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Что-то не так!" });
+  }
+};
