@@ -32,6 +32,7 @@ export const register = async (req, res) => {
     //delete newUser.password;
     return res.json({
       username: newUser.username,
+      _id: newUser._id,
       token: token,
       message: "Пользователь успешно создан"
     });
@@ -62,7 +63,7 @@ export const login = async (req, res) => {
     );
 
     return res.json({
-      id: user._id,
+      _id: user._id,
       username: user.username,
       posts: user.posts,
       createdAt: user.createdAt,
@@ -87,14 +88,14 @@ export const getMe = async (req, res) => {
 
     const token = Jwt.sign(
       {
-        id: user._id
+        _id: user._id
       },
       process.env.JWT_SECRET,
       { expiresIn: "2h" }
     );
 
     res.json({
-      id: user._id,
+      _id: user._id,
       username: user.username,
       posts: user.posts,
       createdAt: user.createdAt,
