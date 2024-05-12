@@ -82,6 +82,20 @@ export const getById = async (req, res) => {
   }
 };
 
+export const getByIdEdit2 = async (req, res) => {
+  try {
+    const post = await Post.findByIdAndUpdate(req.params.id, {});
+
+    if (!post) {
+      res.status(404).json({ message: "Post not found" });
+    } else {
+      res.json(post);
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Что-то не так!" });
+  }
+};
+
 export const getMyPosts = async (req, res) => {
   try {
     const user = await User.findById(req.userId);
@@ -113,12 +127,29 @@ export const removePost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
   try {
+    const user = await User.findById(req.userId); // После проверки авторизации я получаю req.userId и сравниваю с автором поста
+    console.log(req.userId);
+
+    if (!user) {
+      return res.status(403).json({ message: "Пользователь не авторизован" });
+    }
+
     const { title, text, id } = req.body;
     const post = await Post.findById(id);
 
     if (!post) {
       return res.status(404).json({ message: "Пост не найден" });
     }
+
+    // Проверка авторства поста
+    if (post.author.toString() !== req.userId) {
+      return res.status(403).json({
+        message: "Вы не являетесь автором этого поста",
+        user: user._id,
+        author: post.author
+      });
+    }
+
     if (req.files) {
       let fileName = Date.now().toString() + req.files.image.name;
       const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -129,8 +160,34 @@ export const updatePost = async (req, res) => {
     post.title = title;
     post.text = text;
     await post.save();
-    res.json(post);
+    res.json({ message: "Пост успешно обновлен", post: post, user: user });
   } catch (error) {
     res.status(500).json([{ error: error.message }]);
+  }
+};
+
+export const getFivePostTest = async (req, res) => {
+  const { page } = req.query; // Получаем номер страницы из запроса
+
+  const perPage = 5; // Количество постов на одной странице
+  const skip = (page - 1) * perPage; // Пропустить определенное количество постов
+
+  try {
+    const posts = await Post.find()
+      .sort("-createdAt")
+      .skip(skip)
+      .limit(perPage);
+    const popularPosts = await Post.find()
+      .skip(skip)
+      .limit(perPage)
+      .sort("-views");
+
+    if (!posts) {
+      return res.json({ message: "Постов нет" });
+    }
+
+    res.json({ posts, popularPosts });
+  } catch (error) {
+    res.json([{ error: error.message }]);
   }
 };

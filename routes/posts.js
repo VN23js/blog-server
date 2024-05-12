@@ -8,7 +8,8 @@ import {
   getById,
   getMyPosts,
   removePost,
-  updatePost
+  updatePost,
+  getByIdEdit2
 } from "../controllers/posts.js";
 import { isAdmin } from "../controllers/auth.js";
 /////////////
@@ -21,6 +22,7 @@ router.get("/", getAll);
 router.get("/:id", getById);
 //////////// GET MY POSTSID "https://lwr1vjxm-3003.euw.devtunnels.ms/api/user/me",
 router.get("/user/me", checkAuth, getMyPosts);
+router.get("/:id/edit", checkAuth, getByIdEdit2);
 
 //////////// Delete POST
 router.delete("/:id", checkAuth, removePost);
