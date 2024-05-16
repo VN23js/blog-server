@@ -62,6 +62,7 @@ export const login = async (req, res) => {
       { expiresIn: "2h" }
     );
 
+    console.log(user._id, "User id inLogin");
     return res.json({
       _id: user._id,
       username: user.username,
@@ -80,6 +81,7 @@ export const getMe = async (req, res) => {
   try {
     const user = await User.findById(req.userId);
 
+    console.log(req.userId, "User id Check twtoken");
     if (!user) {
       return res.json({
         message: "Такого юзера не существует."

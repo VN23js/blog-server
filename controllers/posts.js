@@ -3,6 +3,7 @@ import Post from "../models/Post.js";
 import User from "../models/User.js";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
+import Comment from "../models/comment.js";
 //Create posts
 
 export const createPost = async (req, res) => {
@@ -187,6 +188,22 @@ export const getFivePostTest = async (req, res) => {
     }
 
     res.json({ posts, popularPosts });
+  } catch (error) {
+    res.json([{ error: error.message }]);
+  }
+};
+///getPostsComents
+
+export const getPostComments = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    console.log(req.params.id);
+    const list = await Promise.all(
+      post.comments.map((comment) => {
+        return Comment.findById(comment);
+      })
+    );
+    res.json(list);
   } catch (error) {
     res.json([{ error: error.message }]);
   }

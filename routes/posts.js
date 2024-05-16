@@ -9,7 +9,8 @@ import {
   getMyPosts,
   removePost,
   updatePost,
-  getByIdEdit2
+  getByIdEdit2,
+  getPostComments
 } from "../controllers/posts.js";
 import { isAdmin } from "../controllers/auth.js";
 /////////////
@@ -30,4 +31,6 @@ router.delete("/:id", checkAuth, removePost);
 //////////// Update POST
 router.put("/:id", checkAuth, updatePost);
 
+//////////// GET MY POSCOMENTS "https://lwr1vjxm-3003.euw.devtunnels.ms/api/comments/:id",
+router.get("/comments/:id", getPostComments);
 export default router;

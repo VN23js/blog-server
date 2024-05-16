@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import authRoute from "./routes/auth.js";
 import postRoute from "./routes/posts.js";
+import commentRoute from "./routes/comments.js";
 import fileUpload from "express-fileupload";
 //import checkAuth from "./utils/checkAuth.js";
 const app = express();
@@ -27,7 +28,7 @@ app.use(express.static("uploads"));
 //Routes
 app.use("/api/auth", authRoute);
 app.use("/api/posts", postRoute);
-
+app.use("/api/comments", commentRoute);
 mongoose
   .connect(
     `mongodb+srv://${DB_USER}:${DB_PASS}@cluster0.h4ob913.mongodb.net/${DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`
