@@ -1,14 +1,16 @@
 import Post from "../models/Post.js";
 import Comment from "../models/comment.js";
+import User from "../models/User.js";
 export const createComment = async (req, res) => {
   try {
+    const user = await User.findById(req.userId);
     const { postId, comment } = req.body;
     if (!comment) {
       return res
         .status(400)
         .json({ error: "Комментарий не может быть пустым" });
     }
-    const newComment = new Comment({ comment });
+    const newComment = new Comment({ comment, username: user.username });
     await newComment.save();
     try {
       await Post.findByIdAndUpdate(postId, {
