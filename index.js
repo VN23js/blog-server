@@ -9,14 +9,17 @@ import fileUpload from "express-fileupload";
 //import checkAuth from "./utils/checkAuth.js";
 const app = express();
 dotenv.config();
-
+const corsOptions = {
+  origin: "https://blog-frontend-two-beta.vercel.app",
+  optionsSuccessStatus: 200
+};
 //Constants
 const PORT = process.env.PORT || 3001;
 const DB_USER = process.env.DB_USER;
 const DB_PASS = process.env.DB_PASS;
 const DB_NAME = process.env.DB_NAME;
 //Meddleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(fileUpload());
 app.use(express.json());
 app.use(express.static("uploads"));
