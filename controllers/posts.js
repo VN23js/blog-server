@@ -3,7 +3,7 @@ import Post from "../models/Post.js";
 import User from "../models/User.js";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
-import Comment from "../models/comment.js";
+import Comment from "../models/Comment.js";
 //Create posts
 
 export const createPost = async (req, res) => {
