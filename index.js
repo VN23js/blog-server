@@ -10,7 +10,7 @@ import fileUpload from "express-fileupload";
 const app = express();
 dotenv.config();
 const corsOptions = {
-  origin: "https://blog-frontend-1c87cyosa-vn23js-projects.vercel.app",
+  origin: "",
   optionsSuccessStatus: 200
 };
 //Constants
