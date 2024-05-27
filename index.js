@@ -22,7 +22,7 @@ const DB_NAME = process.env.DB_NAME;
 app.use(cors(corsOptions));
 app.use(fileUpload());
 app.use(express.json());
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(express.static("uploads"));
 
 //app.get("/", (req, res) => {
 // return res.json({ message: "ALL is fine" });
