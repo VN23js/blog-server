@@ -5,7 +5,6 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import Comment from "../models/Comment.js";
 //Create posts
-
 export const createPost = async (req, res) => {
   try {
     const { title, text } = req.body;
