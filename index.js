@@ -19,7 +19,7 @@ const DB_NAME = process.env.DB_NAME;
 
 // CORS options
 const corsOptions = {
-  origin: "https://blog-three-zeta-97.vercel.app",
+  origin: "https://blog-frontend-1c87cyosa-vn23js-projects.vercel.app",
   optionsSuccessStatus: 200
 };
 
